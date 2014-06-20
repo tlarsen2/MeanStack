@@ -26,3 +26,10 @@ node_modules
 
 # Users Environment Variables
 .lock-wscripts
+
+# WebStorm specific files
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+
+#bower specific files
+**/bower.json

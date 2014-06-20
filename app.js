@@ -22,16 +22,16 @@ mongoose.connect('mongodb://localhost/kcdc');
 require('./lib/config/routes')(router);
 app.use('/', router);*/
 
-//old style to get route
-app.get('/', function(req,res){
-  res.render('index', {message: 'Kick Ass'});
-});
+
 
 var apiRouter = express.Router();
 require('./lib/config/apiRoute')(apiRouter);
 app.use('/api', apiRouter);
 
-
+//old style to get route
+app.get('*', function(req,res){
+    res.render('index', {message: 'Kick Ass'});
+});
 /*app.get('/', function(req,res,next) {
     console.log('Hello World 2');
     next();

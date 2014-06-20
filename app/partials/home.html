@@ -1,15 +1,37 @@
-<form ng-controller="HomeCtrl as home">
-    <input type="text" ng-model="home.speaker.firstName" placeholder="First Name"/>
-    <input type="text" ng-model="home.speaker.lastName" placeholder="Last Name"/>
-    <input type="text" ng-model="home.speaker.email" placeholder="Email Address"/>
-    <button ng-click="home.addSpeaker()" ng-hide="home.editing">Add</button>
-    <button ng-click="home.finishEdit()" ng-show="home.editing">Finish Edit</button><br/>
-    <input type="text" ng-model="search.firstName" />
-    <ul>
-        <li ng-repeat="speaker in home.speakers | filter: search | orderBy: 'lastName'">
-            <a href="mailto:{{ speaker.email }}">{{ speaker.firstName }} {{ speaker.lastName }}</a>
+<style type="text/css">
+    .has-error {
+        color: red;
+        border: solid 1px red;
+    }
+</style>
 
-            <button ng-click="home.editSpeaker(speaker)">Edit</button>
-        </li>
-    </ul>
-</form>
+<div ng-controller="HomeCtrl as home" ng-class="{'has-error' : speakerForm.$invalid && !speakerForm.$pristine}">
+    <form name="speakerForm" ng-class="{'has-error' : speakerForm.$invalid && !speakerForm.$pristine}">
+        <input name="firstName" type="text" ng-model="home.speaker.firstName" required ng-maxlength="15" placeholder="First Name"/>
+        <!--<div ng-show="{speakerForm.firstName.$invalid && speakerForm.firstName.$pristine}">
+            First Name is not valid
+        </div>-->
+        <input type="text" ng-model="home.speaker.lastName" required placeholder="Last Name"/>
+        <input type="email" ng-model="home.speaker.email" placeholder="Email Address"/>
+        <button ng-click="home.addSpeaker()" ng-hide="home.editing" ng-disabled="speakerForm.$invalid">
+            Add
+        </button>
+        <button ng-click="home.finishEdit()" ng-show="home.editing" ng-disabled="speakerForm.$invalid">
+            Finish Edit
+        </button><br/>
+
+        <input type="text" ng-model="search" />
+
+        <speaker first-name="{{speaker.firstName}}" last-name="{{speaker.lastName}}" email="{{ speaker.email }}"
+                 ng-repeat="speaker in home.speakers | filterAll: search | orderBy: 'lastName'" on-edit="home.editSpeaker(speaker)">
+        </speaker>
+        <!--<ul>
+            <li ng-repeat="speaker in home.speakers | filterAll: search | orderBy: 'lastName'">
+                <a href="mailto:{{ speaker.email }}">
+                    {{ speaker.firstName }} {{ speaker.lastName }}
+                </a>
+
+            </li>
+        </ul>-->
+    </form>
+</div>

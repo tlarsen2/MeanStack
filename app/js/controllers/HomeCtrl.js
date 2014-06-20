@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', ['SpeakerSvc', function(speakerSvc){
+app.controller('HomeCtrl', ['$scope', 'SpeakerSvc', function($scope, speakerSvc){
     var self = this;
     self.speaker = {};
     self.speakers = speakerSvc.query();
@@ -8,8 +8,10 @@ app.controller('HomeCtrl', ['SpeakerSvc', function(speakerSvc){
     self.editing = false;
 
     self.addSpeaker = function(){
-        self.speakers.push(self.speaker);
-        self.speaker = {};
+        if($scope.speakerForm.$valid) {
+            self.speakers.push(self.speaker);
+            self.speaker = {};
+        }
     };
     self.editSpeaker = function(speaker){
         self.editing = true;

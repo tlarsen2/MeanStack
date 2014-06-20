@@ -1,0 +1,15 @@
+<form ng-controller="HomeCtrl as home">
+    <input type="text" ng-model="home.speaker.firstName" placeholder="First Name"/>
+    <input type="text" ng-model="home.speaker.lastName" placeholder="Last Name"/>
+    <input type="text" ng-model="home.speaker.email" placeholder="Email Address"/>
+    <button ng-click="home.addSpeaker()" ng-hide="home.editing">Add</button>
+    <button ng-click="home.finishEdit()" ng-show="home.editing">Finish Edit</button><br/>
+    <input type="text" ng-model="search.firstName" />
+    <ul>
+        <li ng-repeat="speaker in home.speakers | filter: search | orderBy: 'lastName'">
+            <a href="mailto:{{ speaker.email }}">{{ speaker.firstName }} {{ speaker.lastName }}</a>
+
+            <button ng-click="home.editSpeaker(speaker)">Edit</button>
+        </li>
+    </ul>
+</form>

@@ -1,0 +1,9 @@
+<form ng-controller="NewCtrl as new">
+
+    <input type="text" ng-model="new.speaker.firstName" />
+    <input type="text" ng-model="new.speaker.lastName" />
+    <ul>
+        <li ng-repeat="speaker in new.speakers">{{ speaker.firstName }} {{ speaker.lastName }}</li>
+    </ul>
+    <button ng-click="new.addSpeaker()">Add</button>
+</form>
